@@ -23,6 +23,7 @@ const indexrouter = require("./routes/index")
 const authorrouter = require("./routes/authors")
 const bookrouter = require("./routes/books")
 
+
 app.use(morgan('dev')) //for path viewer
 app.set("view engine" , "ejs")
 app.set("views",__dirname + "/views")
@@ -31,7 +32,8 @@ app.use(expressLayouts)
 app.use(methodOverride('_method'))
 app.use(express.static("public"))
 // to serve static files from the "public" directory.
-app.use(bodyParser.urlencoded({limit : '10mb', extended:false}))
+app.use(bodyParser.urlencoded({limit : '10mb', extended: false}))
+//no nested objects in url encoded data
 
 
 const mongoose = require('mongoose')

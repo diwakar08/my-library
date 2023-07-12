@@ -3,12 +3,13 @@ const router = express.Router()
 const Author =  require("../models/author")
 const Book = require('../models/book')
 const imageMimeTypes = ['image/jpeg','image/png','image/gif']
+
+
 // const multer = require("multer")
 // const path = require("path")
 // const fs = require("fs") 
 // const uploadPath = path.join('public',Book.coverImageBasePath)
 // const upload = multer({
-  
 //   dest: uploadPath,
 //   fileFilter: (req,file,callback)=>{
 //     // console.log("ggfhg")
@@ -19,17 +20,28 @@ const imageMimeTypes = ['image/jpeg','image/png','image/gif']
 //   }
 // })
 
+
 // All Books Route
 router.get('/', async (req, res) => {
-    try{
-      const books = await Book.find({}).limit(10)
-      res.render('books/index', {
-        books: books,
-        searchOptions:req.query
-      })
-    }catch {
-        res.render('/');
-    }
+    let query = Book.find()
+  if (req.query.title != null && req.query.title != '') {
+    query = query.regex('title', new RegExp(req.query.title, 'i'))
+  }
+  if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
+    query = query.lte('publishDate', req.query.publishedBefore)
+  }
+  if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
+    query = query.gte('publishDate', req.query.publishedAfter)
+  }
+  try {
+    const books = await query.exec()
+    res.render('books/index', {
+      books: books,
+      searchOptions: req.query
+    })
+  } catch {
+    res.redirect('/')
+  }
 })
 
 // New Book Route
@@ -47,6 +59,7 @@ router.get('/new', async(req, res) => {
   }catch{
     renderNewPage(res, new Book())
   }
+  
 })
 
 // Create book Route

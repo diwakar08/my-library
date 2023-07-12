@@ -1,6 +1,6 @@
 <h2>new book</h2>
-<form action="/books/<%= book.id %>?_method=PUT" method="POST" >
+<form action="/books" method="POST" >
     <%- include('_form_fields') %>
-    <a href="/">cancel</a>
-    <button type="submit">submit</button>
+    <a href="/books">cancel</a>
+    <button type="submit">Create</button>
 </form>

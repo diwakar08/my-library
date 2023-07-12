@@ -66,8 +66,8 @@ router.post('/', async (req, res) => {
   try {
     const newAuthor = await author.save()
     console.log("inside try author")
-    // res.redirect(`authors/${newAuthor.id}`)
-    res.redirect('authors')
+    res.redirect(`authors/${newAuthor.id}`)
+    // res.redirect('authors')
   } catch {
     res.render('authors/new', {
       author: author,
@@ -111,7 +111,7 @@ router.put('/:id', async(req,res) => {
       res.redirect('/')
     }
     else{
-    res.render('authors/edit', {
+    res.render(`authors/${author.id}/edit`, {
       author: author,
       errorMessage: 'Error updating Author'
     })

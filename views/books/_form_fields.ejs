@@ -27,11 +27,12 @@
     <input type="number" min="1" name="pagecount"
      value="<%= book.pageCount  %>">
 </div>
-<div>
+<div style="height: 300px; width: 150px;">
     <label>Cover</label>
-    <input type="file"  name="cover" class="filepond">
+    <input  type="file"  name="cover" class="filepond">
 </div>
-<div>
+<br>
+<div style="margin-top: 3px;">
     <label>Desription</label>
     <textarea name="description" id="" cols="30" rows="5">
         <%= book.description  %>
